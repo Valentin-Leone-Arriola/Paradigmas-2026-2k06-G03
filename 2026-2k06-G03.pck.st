@@ -1,8 +1,19 @@
 'From Cuis7.6 [latest update: #7777] on 8 August 2026 at 8:58:41 pm'!
+'From Cuis7.6 [latest update: #7777] on 8 August 2026 at 9:00:34 pm'!
 'Description '!
 !provides: '2026-2k06-G03' 1 3!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
+
+!classDefinition: #Prueba category: #'2026-2k06-G03-Clases'!
+Object subclass: #Prueba
+	instanceVariableNames: 'Prueba1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '2026-2k06-G03-Clases'!
+!classDefinition: 'Prueba class' category: #'2026-2k06-G03-Clases'!
+Prueba class
+	instanceVariableNames: ''!
 
 !classDefinition: #Test category: #'2026-2k06-G03-Clases'!
 Object subclass: #Test
