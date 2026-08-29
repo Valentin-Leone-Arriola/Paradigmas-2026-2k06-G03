@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 24 August 2026 at 11:17:06 pm'!
+'From Cuis7.6 [latest update: #7777] on 29 August 2026 at 1:37:26 am'!
 'Description '!
-!provides: '2026-2k06-G03' 1 11!
+!provides: '2026-2k06-G03' 1 13!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -88,6 +88,10 @@ codigo:=Abogado nuevoCodigo.
 
 ! !
 
+!Abogado methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 00:53:56'!
+especialidad
+^especialidad! !
+
 !Abogado methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 03:29:45'!
 especialidad:esp
 especialidad:=esp.! !
@@ -112,6 +116,50 @@ cargarDatos
 super cargarDatos.
 porcentaje:=Prompter prompt:'Ingrese el porcentaje que cobra el abogado'! !
 
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:21:37'!
+abogadoAsignado
+^abogadoAsignado! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:33:24'!
+abogadoAsignado: abogado
+abogadoAsignado:=abogado.! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 00:18:27'!
+cargarDatos
+juzgado:=Prompter prompt:'Ingrese el juzgado de la causa'.
+demandante:=Prompter prompt:'Ingrese el nombre y apellido del demandante'.
+demandado:=Prompter prompt:'Ingrese el nombre y apellido del demandado'.
+detalle:=Prompter prompt:'Ingrese el motivo de la demanda'.
+sentencia:= Sentencia new.! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 23:53:20'!
+fuero
+^fuero! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 00:19:22'!
+fuero: unFuero.
+fuero:=unFuero.! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:15:56'!
+generaHaberes
+|resul|.
+resul:= sentencia resultado.
+(resul = 'Favorable')
+ifTrue:[
+	^true
+	]
+ifFalse:[
+	^false
+	].! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:26:57'!
+numeroExpediente
+^numeroExpediente! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 23:29:43'!
+numeroExpediente: num
+numeroExpediente:= num.! !
+
 !Causa methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 04:07:50'!
 registrarSentencia
 |sent|
@@ -119,6 +167,45 @@ sent := Sentencia new.
 sent cargarDatos.
 sentencia:=sent.
 ! !
+
+!Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:20:49'!
+sentencia
+^sentencia! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:28:57'!
+asignarAbogado: causa
+|cont abogadoMin cantCausasMin abogadoCausa sentenciaCausa|
+cantCausasMin:= causas size.
+abogadoMin:=nil.
+abogados do:[:unAbogado|
+	(unAbogado especialidad = causa fuero)
+		ifTrue:[
+			cont:=0.
+			causas do:[:unaCausa|
+				sentenciaCausa:= unaCausa sentencia.
+				abogadoCausa:= unaCausa abogadoAsignado.
+				((unaCausa abogadoAsignado = unAbogado) & (sentenciaCausa resultado = nil))
+				ifTrue:[
+					cont:=cont+1.
+					].
+				].
+			(cont<=cantCausasMin)
+			ifTrue:[
+				abogadoMin:=unAbogado.
+				cantCausasMin:=cont.
+				].
+			]	
+].
+^abogadoMin
+! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:39:48'!
+buscarAbogadoPorCodigo: cod.
+^abogados detect: [:unAbogado | (unAbogado codigo) = cod] ifNone:[nil]! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:30:01'!
+buscarCausaPorNumero: numero.
+^causas detect: [:unaCausa | (unaCausa numeroExpediente) = numero] ifNone:[nil]! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 01:09:06'!
 buscarFueroPorCodigo: cod.
@@ -132,11 +219,11 @@ causas:= OrderedCollection new.
 fueros:= OrderedCollection new.
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 24/Aug/2026 20:42:54'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:56:08'!
 registrarAbogado
-|valido continuar fuero opc cod tipo abogado|.
+|valido fuero opc cod tipo abogado|.
 valido:=false.
-continuar:=true.
+opc:='Continuar'.
 tipo:=ChoicePrompter choices: #('CobraFijo' 'CobraPorcentual') caption:'Seleccione el tipo de abogado'.
 (tipo='CobraFijo')
 	ifTrue:[
@@ -145,16 +232,13 @@ tipo:=ChoicePrompter choices: #('CobraFijo' 'CobraPorcentual') caption:'Seleccio
 	ifFalse:[
 		abogado:= CobraPorcentual new.
 		].
-[(valido not) & (continuar)] whileTrue:[
+[(valido not) & (opc~='Salir')] whileTrue:[
 	cod:=Prompter prompt: 'Ingrese el codigo del fuero'.
 	fuero:= self buscarFueroPorCodigo: cod.
 	(fuero=nil)
 	ifTrue:[
 		opc:= ChoicePrompter choices: #('Salir' 'Crear fuero' 'Intentar de nuevo') caption:'No existe un fuero con ese codigo. Desea crear uno, intentar con otro codigo o salir?'.
 		(opc='Salir')
-		ifTrue:[
-			continuar:=false.
-			]
 		ifFalse:[
 			(opc='Crear fuero')
 			ifTrue:[
@@ -166,12 +250,55 @@ tipo:=ChoicePrompter choices: #('CobraFijo' 'CobraPorcentual') caption:'Seleccio
 		abogado especialidad: fuero.
 		abogado cargarDatos.
 		abogados add: abogado.
-		valido:=true
+		valido:=true.
 		].
 	].
 		
 		
 ! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:33:35'!
+registrarCausa
+|numExpediente codFuero fueroIngresado continuar valido causa abogado|.
+continuar:=true.
+valido:=false.
+[continuar & (valido not)] whileTrue:[
+	numExpediente:= (Prompter prompt:'Ingrese el numero de expediente de la causa') asNumber.
+	valido:=self buscarCausaPorNumero: numExpediente.
+	(valido = nil)
+	ifTrue:[
+		continuar:= MessageBox confirm:'Ya existe una causa con este numero de expediente. Desea intentarlo nuevamente?'.
+		valido:=false
+		]
+	ifFalse:[
+		valido:=true.
+		causa:= Causa new.
+		causa numeroExpediente: numExpediente. 
+		].
+].
+valido:=false.
+[continuar & (valido not)] whileTrue:[
+	codFuero:=Prompter prompt: 'Ingrese el codigo del fuero de la causa'.
+	fueroIngresado:= self buscarFueroPorCodigo: codFuero.
+	(fueroIngresado = nil)
+	ifTrue:[
+		continuar:= MessageBox confirm:'No existe un fuero con este codigo. Desea intentarlo nuevamente?'.
+		]
+	ifFalse:[
+		causa fuero: fueroIngresado.
+		valido:=true.
+		].
+	].
+abogado:=self asignarAbogado.
+(abogado = nil)
+ifTrue:[
+	MessageBox notify:'No existen abogados pertenecientes al fuero de la causa'.
+	]
+ifFalse:[
+	causa abogadoAsignado: abogado.
+	causa cargarDatos.
+	causas add: causa. 
+	].! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 02:28:26'!
 registrarFuero
@@ -228,3 +355,7 @@ resultado:= ChoicePrompter choices: #('Favorable' 'No favorable').
 	
 
 ! !
+
+!Sentencia methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 20:22:42'!
+resultado
+^resultado! !

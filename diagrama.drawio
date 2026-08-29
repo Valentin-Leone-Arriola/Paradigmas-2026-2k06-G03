@@ -1,6 +1,6 @@
 <mxfile host="Electron" pages="2">
   <diagram name="DiagramaClases" id="YdNjPEjy7gB6-rET7kIq">
-    <mxGraphModel dx="2135" dy="1018" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1463" dy="704" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -121,7 +121,7 @@
         <mxCell id="x0obDfGzwE2TugpCOJa9-3" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="liquidarHaberes" vertex="1">
           <mxGeometry height="26" width="176" y="216" as="geometry" />
         </mxCell>
-        <mxCell id="x0obDfGzwE2TugpCOJa9-6" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="asignarAbogado" vertex="1">
+        <mxCell id="x0obDfGzwE2TugpCOJa9-6" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="asignarAbogado:" vertex="1">
           <mxGeometry height="26" width="176" y="242" as="geometry" />
         </mxCell>
         <mxCell id="YCnN6jPHge_HGXAqK1bE-66" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="buscarFueroPorCodigo" vertex="1">
@@ -130,7 +130,7 @@
         <mxCell id="YCnN6jPHge_HGXAqK1bE-76" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="buscarAbogadoPorCodigo" vertex="1">
           <mxGeometry height="26" width="176" y="294" as="geometry" />
         </mxCell>
-        <mxCell id="x0obDfGzwE2TugpCOJa9-9" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;calcularCausasAbiertas&lt;/div&gt;" vertex="1">
+        <mxCell id="XFjSBvkRnT-XTYv2U5-3-1" parent="w-eLkJqGOYfRKlQvfLJ0-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="buscarAbogadoPorCodigo" vertex="1">
           <mxGeometry height="26" width="176" y="320" as="geometry" />
         </mxCell>
         <mxCell id="x0obDfGzwE2TugpCOJa9-13" edge="1" parent="1" source="w-eLkJqGOYfRKlQvfLJ0-54" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.006;entryY=0.059;entryDx=0;entryDy=0;entryPerimeter=0;" target="w-eLkJqGOYfRKlQvfLJ0-25" value="">
