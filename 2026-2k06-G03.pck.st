@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 29 August 2026 at 6:23:24 pm'!
+'From Cuis7.6 [latest update: #7777] on 28 September 2026 at 4:58:00 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 15!
+!provides: '2026-2k06-G03' 1 16!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -330,7 +330,7 @@ tipo:=ChoicePrompter choices: #('CobraFijo' 'CobraPorcentual') caption:'Seleccio
 		
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'dlka 29/Aug/2026 16:23:32'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl] 28/Sep/2026 16:57:32'!
 registrarCausa
 |numExpediente codFuero fueroIngresado continuar valido causa causaAsignada|.
 continuar:=true.
@@ -340,13 +340,13 @@ valido:=false.
 	valido:=self buscarCausaPorNumero: numExpediente.
 	(valido = nil)
 	ifTrue:[
-		continuar:= MessageBox confirm:'Ya existe una causa con este numero de expediente. Desea intentarlo nuevamente?'.
-		valido:=false
-		]
-	ifFalse:[
 		valido:=true.
 		causa:= Causa new.
 		causa numeroExpediente: numExpediente. 
+		]
+	ifFalse:[
+		continuar:= MessageBox confirm:'Ya existe una causa con este numero de expediente. Desea intentarlo nuevamente?'.
+		valido:=false
 		].
 ].
 valido:=false.
