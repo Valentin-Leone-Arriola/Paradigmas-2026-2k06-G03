@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 3:36:55 pm'!
+'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 4:43:56 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 17!
+!provides: '2026-2k06-G03' 1 18!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -321,9 +321,10 @@ causas do:[:unaCausa |
 	
 	! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 02:03:16'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 16:43:24'!
 menu
 | opc mensajeopc  opcvalida|
+self inicializar.
 opc := 0.
 mensajeopc := '
  ESTUDIO JURÍDICO
