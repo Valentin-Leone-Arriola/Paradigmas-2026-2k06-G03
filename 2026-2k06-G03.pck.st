@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 4:43:56 pm'!
+'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 4:48:13 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 18!
+!provides: '2026-2k06-G03' 1 19!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -262,7 +262,7 @@ causas
 ^causas
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 02:03:32'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 16:47:58'!
 cerrarCausa
 | nro causaEncontrada|
 
@@ -271,9 +271,9 @@ causaEncontrada := causas
     detect: [ :cadaCausa | cadaCausa numeroExpediente = nro ]
     ifNone: [ nil ].
 causaEncontrada isNil
-    ifTrue: [ self inform:' Error: La causa ingresada no existe. ']
+    ifTrue: [ Transcript show:' Error: La causa ingresada no existe. ']
     ifFalse: [ causaEncontrada registrarSentencia.
-	            self inform:' Causa cerrada y sentencia registrada con exito.'.
+	            Transcript show:' Causa cerrada y sentencia registrada con exito.'.
 	].! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 01:15:24'!
@@ -321,7 +321,7 @@ causas do:[:unaCausa |
 	
 	! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 16:43:24'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 16:47:42'!
 menu
 | opc mensajeopc  opcvalida|
 self inicializar.
@@ -340,18 +340,18 @@ mensajeopc := '
 	opc:=( Prompter prompt: mensajeopc) asNumber.
 	((opc >= 1) and: [opc <=6])
 	ifTrue:[ opcvalida := true]
-	ifFalse:[ self inform:' Error: Ingrese un numero entre en 1 y 6.'].
+	ifFalse:[ Transcript show:' Error: Ingrese un numero entre en 1 y 6.'].
        (opcvalida = true) ifTrue:[
 	    (opc = 1) ifTrue:[ 
 		
 		fueros isEmpty
-		    ifTrue:[ self inform: 'Error: No se pueden registrar abogados si no hay fueros cargados.']
+		    ifTrue:[ Transcript show: 'Error: No se pueden registrar abogados si no hay fueros cargados.']
 		    ifFalse:[ self registrarAbogado ].
 		].
 	    (opc = 2) ifTrue:[
 		
 		 abogados isEmpty              
-		     ifTrue:[ self inform: 'Error: No se pueden registrar causas si no hay abogados cargados.' ]
+		     ifTrue:[ Transcript show: 'Error: No se pueden registrar causas si no hay abogados cargados.' ]
 		     ifFalse:[ self registrarCausa].
 		 ].
 	
@@ -359,13 +359,13 @@ mensajeopc := '
 	
 	    (opc = 4) ifTrue:[ 
 		causas isEmpty
-		ifTrue: [ self inform: ' Error: No se pueden liquidar haberes si no hay causas cargadas. ']
+		ifTrue: [ Transcript show: ' Error: No se pueden liquidar haberes si no hay causas cargadas. ']
 		ifFalse: [ self liquidarHaberes ].
 		].
 	
 	    (opc = 5) ifTrue:[ 
 		causas isEmpty
-		ifTrue: [ self inform:' Error: NO se pueden cerrar causas si no hay causas registradas. ']
+		ifTrue: [ Transcript show:' Error: NO se pueden cerrar causas si no hay causas registradas. ']
 		ifFalse: [ self cerrarCausa ].
 		 ].
 	    
