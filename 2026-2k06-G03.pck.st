@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 28 September 2026 at 4:58:00 pm'!
+'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 3:36:55 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 16!
+!provides: '2026-2k06-G03' 1 17!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -205,6 +205,11 @@ sentencia:=sent.
 sentencia
 ^sentencia! !
 
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 01:07:56'!
+abogados
+^abogados
+! !
+
 !Estudio methodsFor: 'as yet unclassified' stamp: 'dlka 29/Aug/2026 16:20:25'!
 asignarAbogado: causa
 |cont abogadoMin cantCausasMin abogadoCausa sentenciaCausa|
@@ -252,6 +257,30 @@ buscarFueroPorCodigo: cod.
 ^fueros detect: [:unFuero | (unFuero codigo) = cod] ifNone:[nil]
 ! !
 
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 01:15:41'!
+causas
+^causas
+! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 02:03:32'!
+cerrarCausa
+| nro causaEncontrada|
+
+nro := (Prompter prompt: 'Ingrese el número de la causa a cerrar:') asNumber.
+causaEncontrada := causas
+    detect: [ :cadaCausa | cadaCausa numeroExpediente = nro ]
+    ifNone: [ nil ].
+causaEncontrada isNil
+    ifTrue: [ self inform:' Error: La causa ingresada no existe. ']
+    ifFalse: [ causaEncontrada registrarSentencia.
+	            self inform:' Causa cerrada y sentencia registrada con exito.'.
+	].! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 01:15:24'!
+fueros
+^fueros
+! !
+
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 24/Aug/2026 20:44:58'!
 inicializar
 abogados:= OrderedCollection new.
@@ -291,6 +320,60 @@ causas do:[:unaCausa |
 
 	
 	! !
+
+!Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 02:03:16'!
+menu
+| opc mensajeopc  opcvalida|
+opc := 0.
+mensajeopc := '
+ ESTUDIO JURÍDICO
+1. Registrar Abogado
+2. Registrar Causa
+3. Registrar Fuero
+4. Liquidar Haberes
+5. Cerrar Causa
+6. Salir'.
+
+[opc = 6] whileFalse: [
+	opcvalida:= false.
+	opc:=( Prompter prompt: mensajeopc) asNumber.
+	((opc >= 1) and: [opc <=6])
+	ifTrue:[ opcvalida := true]
+	ifFalse:[ self inform:' Error: Ingrese un numero entre en 1 y 6.'].
+       (opcvalida = true) ifTrue:[
+	    (opc = 1) ifTrue:[ 
+		
+		fueros isEmpty
+		    ifTrue:[ self inform: 'Error: No se pueden registrar abogados si no hay fueros cargados.']
+		    ifFalse:[ self registrarAbogado ].
+		].
+	    (opc = 2) ifTrue:[
+		
+		 abogados isEmpty              
+		     ifTrue:[ self inform: 'Error: No se pueden registrar causas si no hay abogados cargados.' ]
+		     ifFalse:[ self registrarCausa].
+		 ].
+	
+	    (opc = 3) ifTrue:[ self registrarFuero ].
+	
+	    (opc = 4) ifTrue:[ 
+		causas isEmpty
+		ifTrue: [ self inform: ' Error: No se pueden liquidar haberes si no hay causas cargadas. ']
+		ifFalse: [ self liquidarHaberes ].
+		].
+	
+	    (opc = 5) ifTrue:[ 
+		causas isEmpty
+		ifTrue: [ self inform:' Error: NO se pueden cerrar causas si no hay causas registradas. ']
+		ifFalse: [ self cerrarCausa ].
+		 ].
+	    
+	].
+].
+			
+
+
+! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:56:08'!
 registrarAbogado
