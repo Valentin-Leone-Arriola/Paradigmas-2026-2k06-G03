@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 5:03:19 pm'!
+'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 6:56:45 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 21!
+!provides: '2026-2k06-G03' 1 22!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -112,8 +112,9 @@ nombre
 inicializarUltimoCodigo
 UltimoCodigo:=-1.! !
 
-!Abogado class methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 01:52:35'!
+!Abogado class methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 17:54:35'!
 nuevoCodigo
+self inicializarUltimoCodigo.
 UltimoCodigo:=UltimoCodigo+1.
 ^UltimoCodigo! !
 
@@ -210,7 +211,7 @@ abogados
 ^abogados
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'dlka 29/Aug/2026 16:20:25'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 18:23:59'!
 asignarAbogado: causa
 |cont abogadoMin cantCausasMin abogadoCausa sentenciaCausa|
 cantCausasMin:= causas size.
@@ -242,7 +243,7 @@ ifTrue:[
 ifFalse:[
 	causa abogadoAsignado: abogadoMin.
 	].
-! !
+^ causa! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:39:48'!
 buscarAbogadoPorCodigo: cod.
@@ -288,7 +289,7 @@ causas:= OrderedCollection new.
 fueros:= OrderedCollection new.
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'dlka 29/Aug/2026 18:22:27'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 18:56:08'!
 liquidarHaberes
 |fechaDesde fechaHasta generaHab difFechaDesde difFechaHasta fechaCierre montoLiquidar abogado|
 fechaDesde:= Date fromString: (Prompter prompt:'Ingrese la fecha de inicio del periodo a liquidar con formato dd/mm/aaaa').
@@ -315,11 +316,10 @@ causas do:[:unaCausa |
 			show: montoLiquidar asString;
 			cr.
 			].
+	
 		].
 	].
-
-	
-	! !
+! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 17:02:59'!
 menu
@@ -377,7 +377,7 @@ mensajeopc := '
 
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 28/Aug/2026 22:56:08'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 18:13:55'!
 registrarAbogado
 |valido fuero opc cod tipo abogado|.
 valido:=false.
