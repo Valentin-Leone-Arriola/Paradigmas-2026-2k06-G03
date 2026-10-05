@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 1 October 2026 at 6:56:45 pm'!
+'From Cuis7.6 [latest update: #7777] on 5 October 2026 at 5:14:12 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 22!
+!provides: '2026-2k06-G03' 1 23!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -122,22 +122,22 @@ UltimoCodigo:=UltimoCodigo+1.
 calcularHaberCausa: causa.
 ^monto! !
 
-!CobraFijo methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 02:03:08'!
+!CobraFijo methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 16:35:17'!
 cargarDatos
 super cargarDatos.
-monto:=Prompter prompt:'Ingrese el monto que cobra el abogado'.
+monto:=(Prompter prompt:'Ingrese el monto que cobra el abogado' ) asNumber.
 ! !
 
-!CobraPorcentual methodsFor: 'as yet unclassified' stamp: 'dlka 29/Aug/2026 17:30:38'!
+!CobraPorcentual methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 16:36:27'!
 calcularHaberCausa: unaCausa
 |montoCausa|
 montoCausa:= (unaCausa sentencia) monto.
-^(montoCausa * ((porcentaje)/100)) asNumber.! !
+^(montoCausa * ((porcentaje) asNumber/100)) asNumber.! !
 
-!CobraPorcentual methodsFor: 'as yet unclassified' stamp: 'vl 22/Aug/2026 02:03:59'!
+!CobraPorcentual methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 16:34:27'!
 cargarDatos
 super cargarDatos.
-porcentaje:=Prompter prompt:'Ingrese el porcentaje que cobra el abogado'! !
+porcentaje:=(Prompter prompt:'Ingrese el porcentaje que cobra el abogado') asNumber.! !
 
 !Causa methodsFor: 'as yet unclassified' stamp: 'vl 29/Aug/2026 01:21:37'!
 abogadoAsignado
@@ -211,7 +211,7 @@ abogados
 ^abogados
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 18:23:59'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 16:46:03'!
 asignarAbogado: causa
 |cont abogadoMin cantCausasMin abogadoCausa sentenciaCausa|
 cantCausasMin:= causas size.
@@ -237,11 +237,13 @@ abogados do:[:unAbogado|
 ].
 (abogadoMin = nil)
 ifTrue:[
-	MessageBox notify:'No existen abogados pertenecientes al fuero de la causa'.
+	Transcript show: 'No existen abogados pertenecientes al fuero de la causa'.
 	^nil
 	]
 ifFalse:[
 	causa abogadoAsignado: abogadoMin.
+	Transcript show: 'El abogado ', (abogadoMin nombre), ' ', (abogadoMin apellido), ' ', 'fue asignado a la causa',' ' ,(causa numeroExpediente) asString;
+	cr.
 	].
 ^ causa! !
 
@@ -263,7 +265,7 @@ causas
 ^causas
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 17:03:13'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 17:07:59'!
 cerrarCausa
 | nro causaEncontrada|
 
@@ -272,9 +274,12 @@ causaEncontrada := causas
     detect: [ :cadaCausa | cadaCausa numeroExpediente = nro ]
     ifNone: [ nil ].
 causaEncontrada isNil
-    ifTrue: [ Transcript show:' Error: La causa ingresada no existe. '; cr.]
-    ifFalse: [ causaEncontrada registrarSentencia.
-	            Transcript show:' Causa cerrada y sentencia registrada con exito.'; cr.
+    ifTrue: [ 
+	Transcript show:' Error: La causa ingresada no existe. '; cr.
+	]
+    ifFalse: [
+	causaEncontrada registrarSentencia.
+	Transcript show:' Causa cerrada y sentencia registrada con exito.'; cr.
 	].! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'u 29/Sep/2026 01:15:24'!
@@ -289,9 +294,10 @@ causas:= OrderedCollection new.
 fueros:= OrderedCollection new.
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 18:56:08'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 15:54:29'!
 liquidarHaberes
-|fechaDesde fechaHasta generaHab difFechaDesde difFechaHasta fechaCierre montoLiquidar abogado|
+|fechaDesde fechaHasta generaHab difFechaDesde difFechaHasta fechaCierre montoLiquidar abogado causasGeneranHaberes|
+causasGeneranHaberes:=0.
 fechaDesde:= Date fromString: (Prompter prompt:'Ingrese la fecha de inicio del periodo a liquidar con formato dd/mm/aaaa').
 fechaHasta:= Date fromString: (Prompter prompt:'Ingrese la fecha de fin del periodo a liquidar con formato dd/mm/aaaa').
 causas do:[:unaCausa |
@@ -303,13 +309,14 @@ causas do:[:unaCausa |
 		difFechaHasta:=(fechaCierre subtractDate: fechaHasta) asNumber.
 		((difFechaDesde>=0) & (difFechaHasta<=0))
 		ifTrue:[
+			causasGeneranHaberes:= causasGeneranHaberes+1.
 			abogado:= unaCausa abogadoAsignado. 
 			montoLiquidar:= abogado calcularHaberCausa: unaCausa. 
 			Transcript 
 			show: (unaCausa numeroExpediente)asString , ' | ';
 			show: (unaCausa fechaInicio) asString , ' | ';
 			show: fechaCierre asString, ' | ';
-			show: unaCausa fuero , ' | ';
+			show: (unaCausa fuero) descripcion  , ' | ';
 			show: abogado nombre , ' | ';
 			show: abogado apellido , ' | ';
 			show: ((unaCausa sentencia) monto ) asString, ' | ';
@@ -319,12 +326,14 @@ causas do:[:unaCausa |
 	
 		].
 	].
-! !
+(causasGeneranHaberes>0)
+ifFalse:[
+	Transcript show: 'No hay causas con haberes para liquidar entre esas fechas'.
+	].! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'u 1/Oct/2026 17:02:59'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 17:04:14'!
 menu
 | opc mensajeopc  opcvalida|
-self inicializar.
 Transcript clear.
 opc := 0.
 mensajeopc := '
@@ -347,13 +356,15 @@ mensajeopc := '
 		
 		fueros isEmpty
 		    ifTrue:[ Transcript show: 'Error: No se pueden registrar abogados si no hay fueros cargados.'; cr.]
-		    ifFalse:[ self registrarAbogado ].
+		    ifFalse:[ Transcript clear.
+			self registrarAbogado ].
 		].
 	    (opc = 2) ifTrue:[
 		
 		 abogados isEmpty              
 		     ifTrue:[ Transcript show: 'Error: No se pueden registrar causas si no hay abogados cargados.' ; cr.]
-		     ifFalse:[ self registrarCausa].
+		     ifFalse:[Transcript clear.
+			 self registrarCausa].
 		 ].
 	
 	    (opc = 3) ifTrue:[ self registrarFuero ].
@@ -361,13 +372,15 @@ mensajeopc := '
 	    (opc = 4) ifTrue:[ 
 		causas isEmpty
 		ifTrue: [ Transcript show: ' Error: No se pueden liquidar haberes si no hay causas cargadas. '; cr.]
-		ifFalse: [ self liquidarHaberes ].
+		ifFalse: [Transcript clear.
+			 self liquidarHaberes ].
 		].
 	
 	    (opc = 5) ifTrue:[ 
 		causas isEmpty
 		ifTrue: [ Transcript show:' Error: NO se pueden cerrar causas si no hay causas registradas. '; cr.]
-		ifFalse: [ self cerrarCausa ].
+		ifFalse: [Transcript clear.
+			 self cerrarCausa ].
 		 ].
 	    
 	].
@@ -495,7 +508,7 @@ descripcion
 descripcion: desc
 descripcion:=desc.! !
 
-!Sentencia methodsFor: 'as yet unclassified' stamp: 'vl 24/Aug/2026 20:48:52'!
+!Sentencia methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 17:13:45'!
 cargarDatos
 fecha:= Date fromString: (Prompter prompt:'Ingrese una fecha con formato dd/mm/aaaa').
 resultado:= ChoicePrompter choices: #('Favorable' 'No favorable').
