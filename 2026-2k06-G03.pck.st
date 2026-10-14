@@ -1,6 +1,6 @@
-'From Cuis7.6 [latest update: #7777] on 5 October 2026 at 5:14:12 pm'!
+'From Cuis7.6 [latest update: #7777] on 14 October 2026 at 8:09:34 pm'!
 'Description '!
-!provides: '2026-2k06-G03' 1 23!
+!provides: '2026-2k06-G03' 1 24!
 SystemOrganization addCategory: #'2026-2k06-G03-Clases'!
 
 
@@ -83,11 +83,12 @@ apellido
 calcularHaberCausa: unaCausa
 self subclassResponsibility! !
 
-!Abogado methodsFor: 'as yet unclassified' stamp: 'vl 24/Aug/2026 20:41:23'!
+!Abogado methodsFor: 'as yet unclassified' stamp: 'vl 14/Oct/2026 19:08:03'!
 cargarDatos
-nombre:=Prompter prompt:'Ingrese el nombre'.
-apellido:=Prompter prompt:'Ingrese el apellido'.
+nombre:=Prompter prompt:'Ingrese el nombre del abogado'.
+apellido:=Prompter prompt:'Ingrese el apellido del abogado'.
 tipoDocumento:=ChoicePrompter choices: #('DNI' 'Pasaporte').
+documento:=(Prompter prompt: 'Ingrese el numero de documento del abogado') asNumber.
 domicilio:=Prompter prompt: 'Ingrese el domicilio del abogado'.
 email:=Prompter prompt: 'Ingrese el email del abogado'.
 telefono:=(Prompter prompt: 'Ingrese el telefono del abogado') asNumber.
@@ -112,9 +113,8 @@ nombre
 inicializarUltimoCodigo
 UltimoCodigo:=-1.! !
 
-!Abogado class methodsFor: 'as yet unclassified' stamp: 'sd 1/Oct/2026 17:54:35'!
+!Abogado class methodsFor: 'as yet unclassified' stamp: 'vl 14/Oct/2026 19:01:20'!
 nuevoCodigo
-self inicializarUltimoCodigo.
 UltimoCodigo:=UltimoCodigo+1.
 ^UltimoCodigo! !
 
@@ -287,12 +287,12 @@ fueros
 ^fueros
 ! !
 
-!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 24/Aug/2026 20:44:58'!
+!Estudio methodsFor: 'as yet unclassified' stamp: 'vl 14/Oct/2026 19:00:55'!
 inicializar
 abogados:= OrderedCollection new.
 causas:= OrderedCollection new.
 fueros:= OrderedCollection new.
-! !
+Abogado inicializarUltimoCodigo. ! !
 
 !Estudio methodsFor: 'as yet unclassified' stamp: 'vl 5/Oct/2026 15:54:29'!
 liquidarHaberes
